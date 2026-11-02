@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vionita Store</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;padding:0;background:#FFF9F5;}
+header{background:#f692dd;color:white;padding:20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.header-left{flex:1}
+.cart-btn{background:white;color:#f692dd;border:none;padding:10px 18px;border-radius:25px;font-weight:bold;cursor:pointer;transition:0.3s;}
+.cart-btn:hover{transform:scale(1.1);background:#b8f57e;color:white;}
+.product-grid{display:flex;gap:20px;justify-content:center;padding:20px;flex-wrap:wrap}
+.card{border:1px solid #f87ad4;padding:15px;border-radius:12px;width:220px;text-align:center;background:white;transition:all 0.3s ease;}
+.card:hover{transform:translateY(-8px);box-shadow:0 10px 20px rgba(246,146,221,0.3);}
+.card img{width:100%;border-radius:8px;}
+footer{background:#b8f57e;color:white;text-align:center;padding:20px;margin-top:20px;}
+.btn-beli{display:block;margin-top:12px;background:#f692dd;color:white;padding:10px;border-radius:8px;text-align:center;text-decoration:none;font-weight:bold;transition:all 0.3s ease;border:none;width:100%;cursor:pointer;}
+.btn-beli:hover{background:#acf6a1;transform:scale(1.05);}
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:999;background:#25D366;color:white;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:30px;box-shadow:0 4px 10px rgba(0,0,0,0.3);}
+.cart-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center;}
+.cart-content{background:white;padding:25px;border-radius:15px;width:90%;max-width:400px;max-height:80vh;overflow-y:auto;}
+.cart-item{display:flex;justify-content:space-between;margin:10px 0;border-bottom:1px solid #eee;padding-bottom:8px;}
+.btn-checkout{background:#25D366;color:white;padding:12px;width:100%;border:none;border-radius:8px;font-weight:bold;margin-top:15px;cursor:pointer;}
+@media (max-width:600px){.product-grid{flex-direction:column;align-items:center;} .card{width:90%;max-width:300px;} header{flex-direction:column;gap:10px}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-left"><h1 style="margin:0">Vionita Store</h1><p style="margin:0">Toko Laptop & Keyboard Terpercaya</p></div>
+<button class="cart-btn" onclick="openCart()">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+</header>
+<div class="product-grid">
+  <div class="card"><img src="images/produk1.jpg" alt="Laptop"><h3>Laptop</h3><p>Laptop berkualitas untuk belajar</p><p><b>Rp5.000.000</b></p><button class="btn-beli" onclick="addToCart('Laptop',5000000)">Tambah ke Keranjang</button></div>
+  <div class="card"><img src="images/produk2.jpg" alt="Keyboard"><h3>Keyboard</h3><p>Keyboard nyaman untuk bekerja</p><p><b>Rp250.000</b></p><button class="btn-beli" onclick="addToCart('Keyboard',250000)">Tambah ke Keranjang</button></div>
+</div>
+
+<div id="cartModal" class="cart-modal" onclick="closeCart()">
+  <div class="cart-content" onclick="event.stopPropagation()">
+    <h2>Keranjang Kamu</h2>
+    <div id="cart-items"></div>
+    <p><b>Total: Rp<span id="cart-total">0</span></b></p>
+    <button class="btn-checkout" onclick="checkoutWA()">Checkout via WhatsApp</button>
+    <button style="margin-top:10px;width:100%;padding:10px;border-radius:8px;border:1px solid #f692dd;background:white;color:#f692dd;cursor:pointer" onclick="closeCart()">Tutup</button>
+  </div>
+</div>
+
+<footer>Vionita Store - 089686213325</footer>
+<a class="wa-float" href="https://wa.me/6289686213325" target="_blank">💬</a>
+
+<script>
+let cart=[];
+function addToCart(name,price){cart.push({name,price});updateCart();alert(name+' masuk keranjang! 🛒');}
+function updateCart(){document.getElementById('cart-count').innerText=cart.length;let total=0;let html='';cart.forEach((item,i)=>{total+=item.price;html+=`<div class="cart-item"><span>${item.name} - Rp${item.price.toLocaleString()}</span><span style="cursor:pointer;color:red" onclick="removeItem(${i})">❌</span></div>`});if(cart.length==0)html='<p>Keranjang masih kosong</p>';document.getElementById('cart-items').innerHTML=html;document.getElementById('cart-total').innerText=total.toLocaleString();}
+function removeItem(i){cart.splice(i,1);updateCart();}
+function openCart(){document.getElementById('cartModal').style.display='flex';}
+function closeCart(){document.getElementById('cartModal').style.display='none';}
+function checkoutWA(){if(cart.length==0){alert('Keranjang kosong!');return;}let pesan='Halo kak Vionita Store, mau pesan:%0A';let total=0;cart.forEach(item=>{pesan+=`- ${item.name} Rp${item.price.toLocaleString()}%0A`;total+=item.price;});pesan+=`%0ATotal: Rp${total.toLocaleString()}`;window.open('https://wa.me/6289686213325?text='+pesan,'_blank');}
+</script>
+</body>
+</html>
