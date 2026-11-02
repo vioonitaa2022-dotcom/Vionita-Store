@@ -55,7 +55,7 @@ function updateCart(){document.getElementById('cart-count').innerText=cart.lengt
 function removeItem(i){cart.splice(i,1);updateCart();}
 function openCart(){document.getElementById('cartModal').style.display='flex';}
 function closeCart(){document.getElementById('cartModal').style.display='none';}
-function checkoutWA(){if(cart.length==0){alert('Keranjang kosong!');return;}let pesan='Halo kak Vionita Store, mau pesan:%0A';let total=0;cart.forEach(item=>{pesan+=`- ${item.name} Rp${item.price.toLocaleString()}%0A`;total+=item.price;});pesan+=`%0ATotal: Rp${total.toLocaleString()}`;window.open('https://wa.me/6289636213325?text='+pesan,'_blank');}
+function checkoutWA(){if(cart.length==0){alert('Keranjang kosong!');return;}let pesan='Halo kak Vionita Store, mau pesan:%0A';let total=0;cart.forEach(item=>{pesan+=`- ${item.name} Rp${item.price.toLocaleString()}%0A`;total+=item.price;});pesan+=`%0ATotal: Rp${total.toLocaleString()}`;window.open('https://wa.me/089636213325?text='+pesan,'_blank');}
 </script>
 </body>
 </html>
